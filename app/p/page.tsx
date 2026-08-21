@@ -1,10 +1,10 @@
 "use client";
-export const dynamic = 'force-dynamic';
-import { useEffect, useState } from "react";
+
+import { useEffect, useState, Suspense } from "react";
 import { useParams } from "next/navigation";
 import { supabase } from "@/lib/supabase";
 
-export default function PublicSite() {
+function PublicSiteContent() {
   const { siteId } = useParams();
   const [pages, setPages] = useState<any[]>([]);
   const [activePageIndex, setActivePageIndex] = useState(0);
@@ -49,8 +49,11 @@ export default function PublicSite() {
     if (el.shapeType === "button" && el.content?.link) {
       const link = el.content.link;
       if (link.startsWith("/")) {
-        // Redirection vers une autre page du site si format "/page-2"
-        const pageIdx = pages.findIndex((p) => p.id === link.replace("/", "") || p.title.toLowerCase() === link.replace("/", "").toLowerCase());
+        const pageIdx = pages.findIndex(
+          (p) =>
+            p.id === link.replace("/", "") ||
+            p.title.toLowerCase() === link.replace("/", "").toLowerCase()
+        );
         if (pageIdx !== -1) setActivePageIndex(pageIdx);
       } else {
         window.open(link, el.content.linkTarget || "_self");
@@ -71,7 +74,9 @@ export default function PublicSite() {
               key={p.id}
               onClick={() => setActivePageIndex(idx)}
               className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition ${
-                activePageIndex === idx ? "bg-indigo-600 text-white" : "text-slate-400 hover:text-white"
+                activePageIndex === idx
+                  ? "bg-indigo-600 text-white"
+                  : "text-slate-400 hover:text-white"
               }`}
             >
               {p.title}
@@ -81,7 +86,11 @@ export default function PublicSite() {
       )}
 
       {/* Rendu des Éléments de la page */}
-      <div className={`relative w-[850px] h-[750px] ${pages.length > 1 ? "mt-16" : ""}`}>
+      <div
+        className={`relative w-[850px] h-[750px] ${
+          pages.length > 1 ? "mt-16" : ""
+        }`}
+      >
         {activePage.elements.map((el: any) => (
           <div
             key={el.id}
@@ -93,7 +102,10 @@ export default function PublicSite() {
               width: `${el.width}px`,
               height: `${el.height}px`,
               zIndex: el.zIndex || 1,
-              cursor: el.shapeType === "button" && el.content?.link ? "pointer" : "default",
+              cursor:
+                el.shapeType === "button" && el.content?.link
+                  ? "pointer"
+                  : "default",
             }}
           >
             {/* TITRE & PARAGRAPHE */}
@@ -147,5 +159,13 @@ export default function PublicSite() {
         ))}
       </div>
     </div>
+  );
+}
+
+export default function PublicSite() {
+  return (
+    <Suspense fallback={<div>Chargement...</div>}>
+      <PublicSiteContent />
+    </Suspense>
   );
 }
