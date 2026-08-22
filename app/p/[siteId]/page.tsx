@@ -4,6 +4,8 @@ import { useEffect, useState, Suspense } from "react";
 import { useParams } from "next/navigation";
 import { supabase } from "@/lib/supabase";
 
+export const dynamic = "force-dynamic";
+
 function PublicSiteContent() {
   const { siteId } = useParams();
   const [pages, setPages] = useState<any[]>([]);
@@ -66,7 +68,6 @@ function PublicSiteContent() {
       className="min-h-screen w-full relative overflow-x-hidden flex flex-col items-center justify-start"
       style={{ backgroundColor: activePage.backgroundColor || "#ffffff" }}
     >
-      {/* Navigation Multi-pages si plusieurs pages */}
       {pages.length > 1 && (
         <nav className="w-full bg-slate-900/80 backdrop-blur-md border-b border-slate-800 py-3 px-6 flex justify-center gap-4 fixed top-0 z-50">
           {pages.map((p, idx) => (
@@ -85,7 +86,6 @@ function PublicSiteContent() {
         </nav>
       )}
 
-      {/* Rendu des Éléments de la page */}
       <div
         className={`relative w-[850px] h-[750px] ${
           pages.length > 1 ? "mt-16" : ""
@@ -108,7 +108,6 @@ function PublicSiteContent() {
                   : "default",
             }}
           >
-            {/* TITRE & PARAGRAPHE */}
             {(el.type === "heading" || el.type === "paragraph") && (
               <div
                 style={{
@@ -125,7 +124,6 @@ function PublicSiteContent() {
               </div>
             )}
 
-            {/* IMAGE */}
             {el.type === "image" && el.content.imageUrl && (
               <img
                 src={el.content.imageUrl}
@@ -135,7 +133,6 @@ function PublicSiteContent() {
               />
             )}
 
-            {/* FORMES & BOUTONS */}
             {el.type === "shape" && (
               <div
                 style={{
