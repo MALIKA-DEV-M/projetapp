@@ -1,5 +1,7 @@
-export const dynamic = "force-dynamic";
-
-export default function PLayout({ children }: { children: React.ReactNode }) {
+export default function PublicLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return <>{children}</>;
 }
