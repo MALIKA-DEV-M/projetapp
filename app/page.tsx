@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef, useCallback, Suspense } from "react";
 import { supabase } from "@/lib/supabase";
 import { useRouter, useSearchParams } from "next/navigation";
 import {
@@ -69,7 +69,7 @@ type Page = {
   elements: CanvasElement[];
 };
 
-export default function Editor() {
+function EditorContent() {
   const [pages, setPages] = useState<Page[]>([
     {
       id: "page-1",
@@ -939,5 +939,12 @@ export default function Editor() {
         </aside>
       </div>
     </div>
+  );
+}
+export default function Editor() {
+  return (
+    <Suspense fallback={<div className="p-8 text-center text-slate-400">Chargement de l'éditeur...</div>}>
+      <EditorContent />
+    </Suspense>
   );
 }
