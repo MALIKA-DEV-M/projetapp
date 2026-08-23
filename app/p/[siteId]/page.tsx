@@ -4,8 +4,6 @@ import { useEffect, useState, Suspense } from "react";
 import { useParams } from "next/navigation";
 import { supabase } from "@/lib/supabase";
 
-export const dynamic = "force-dynamic";
-
 function PublicSiteContent() {
   const { siteId } = useParams();
   const [pages, setPages] = useState<any[]>([]);
