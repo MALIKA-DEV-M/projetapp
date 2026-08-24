@@ -11,6 +11,32 @@ import {
   Smartphone, ArrowLeft, Lock
 } from "lucide-react";
 
+
+
+// 1. DÉFINITION DES TYPES MANQUANTS
+type ElementType = "text" | "heading" | "paragraph" | "image" | "shape" | "button" | string;
+type ShapeType = "rectangle" | "circle" | "triangle" | "pill" | "button" | string;
+
+interface CanvasElement {
+  id: string;
+  type: ElementType;
+  content?: any;
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  backgroundColor?: string;
+  color?: string;
+  fontSize?: number;
+  shapeType?: ShapeType;
+  [key: string]: any;
+}
+
+// 2. FONCTION DE GÉNÉRATION D'ID UNIQUE
+const generateUniqueId = (): string => {
+  return "el_" + Math.random().toString(36).substring(2, 9);
+};
+
 // --- LANDING PAGE ---
 function LandingPage() {
   return (
@@ -77,7 +103,7 @@ function MainContent() {
 }
 
 function EditorContent({ queryId }: { queryId: string }) {
-  /function EditorContent({ queryId }: { queryId: string }) {
+ 
   const router = useRouter();
 
   // 1. DÉCLARATION DES ÉTATS (STATES)
