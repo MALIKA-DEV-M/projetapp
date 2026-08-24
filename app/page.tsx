@@ -2,66 +2,65 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col justify-between">
-      {/* Navigation */}
-      <header className="w-full max-w-7xl mx-auto px-6 py-5 flex items-center justify-between border-b border-slate-800/80">
-        <div className="text-xl font-bold tracking-tight bg-gradient-to-r from-indigo-400 to-pink-400 bg-clip-text text-transparent">
-          MySaaS
-        </div>
-        <div className="flex items-center gap-4">
-          <Link
-            href="/login"
-            className="text-sm font-medium text-slate-300 hover:text-white transition"
-          >
-            Se connecter
-          </Link>
-          <Link
-            href="/editor"
-            className="text-sm font-semibold px-4 py-2 bg-indigo-600 hover:bg-indigo-500 rounded-lg transition"
-          >
-            Ouvrir l'éditeur
-          </Link>
-        </div>
-      </header>
+    <div className="relative min-h-screen bg-[#0b0f17] text-white flex flex-col justify-center items-start px-8 md:px-20 overflow-hidden font-sans">
+      {/* Fond avec grille */}
+      <div 
+        className="absolute inset-0 opacity-15 pointer-events-none"
+        style={{
+          backgroundImage: `linear-gradient(#334155 1px, transparent 1px), linear-gradient(90deg, #334155 1px, transparent 1px)`,
+          backgroundSize: '40px 40px'
+        }}
+      />
 
-      {/* Hero Section */}
-      <main className="flex-1 max-w-4xl mx-auto px-6 flex flex-col items-center justify-center text-center my-16 space-y-8">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-indigo-500/30 bg-indigo-500/10 text-xs font-medium text-indigo-300">
-          ✨ Bienvenue sur votre plateforme
+      <div className="relative z-10 max-w-3xl space-y-6">
+        {/* Badge Amber */}
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-amber-500/30 bg-amber-500/10 text-amber-400 text-sm font-mono">
+          <span className="h-2 w-2 rounded-full bg-amber-400"></span>
+          • Aucune ligne de code requise
         </div>
 
-        <h1 className="text-4xl sm:text-6xl font-extrabold tracking-tight leading-tight">
-          Créez et publiez vos projets web{" "}
-          <span className="bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
-            en quelques secondes
-          </span>
+        {/* Titre */}
+        <h1 className="text-4xl md:text-6xl font-bold tracking-tight leading-tight">
+          Votre site, construit{" "}
+          <span className="text-amber-400">sous vos yeux.</span>
         </h1>
 
-        <p className="text-lg text-slate-400 max-w-2xl">
-          Concevez vos pages sans écrire une seule ligne de code, gérez votre
-          contenu en toute simplicité et déployez en un clic.
+        {/* Description */}
+        <p className="text-slate-400 text-lg md:text-xl leading-relaxed max-w-2xl">
+          Assemblez un site professionnel en quelques minutes grâce à des blocs
+          prêts à l'emploi. Commencez gratuitement, passez en Pro dès que vous
+          voulez aller plus loin.
         </p>
 
-        <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto pt-2">
+        {/* Boutons */}
+        <div className="flex flex-wrap items-center gap-4 pt-2">
           <Link
-            href="/editor"
-            className="px-8 py-3.5 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold rounded-xl shadow-lg shadow-indigo-600/25 transition text-center"
+            href="/dashboard"
+            className="px-6 py-3.5 bg-amber-500 hover:bg-amber-400 text-slate-950 font-semibold rounded-xl transition shadow-lg shadow-amber-500/10"
           >
-            Lancer l'éditeur
+            Commencer gratuitement
           </Link>
           <Link
-            href="/login"
-            className="px-8 py-3.5 bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-200 font-semibold rounded-xl transition text-center"
+            href="/pricing"
+            className="px-6 py-3.5 bg-slate-900/80 hover:bg-slate-800 border border-slate-700/80 text-white font-semibold rounded-xl transition"
           >
-            Accéder à mon compte
+            Voir les tarifs
           </Link>
         </div>
-      </main>
 
-      {/* Footer */}
-      <footer className="w-full border-t border-slate-800/80 py-6 text-center text-xs text-slate-500">
-        © {new Date().getFullYear()} MySaaS. Tous droits réservés.
-      </footer>
+        {/* Liste sous les boutons */}
+        <div className="flex flex-wrap items-center gap-6 pt-4 text-xs md:text-sm text-slate-400">
+          <span className="flex items-center gap-1.5">
+            <span className="text-emerald-400">✓</span> Gratuit, sans carte bancaire
+          </span>
+          <span className="flex items-center gap-1.5">
+            <span className="text-emerald-400">✓</span> Hébergement inclus
+          </span>
+          <span className="flex items-center gap-1.5">
+            <span className="text-emerald-400">✓</span> Pro à 6,99 €/mois
+          </span>
+        </div>
+      </div>
     </div>
   );
 }
