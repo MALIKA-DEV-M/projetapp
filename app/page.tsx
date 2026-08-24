@@ -77,7 +77,33 @@ function MainContent() {
 }
 
 function EditorContent({ queryId }: { queryId: string }) {
-  // COLLE ICI LE RESTE DE TON CODE D'ÉDITEUR (A PARTIR DE STATENAMES, USEEFFECT, ETC.)
+  /function EditorContent({ queryId }: { queryId: string }) {
+  const router = useRouter();
+
+  // 1. DÉCLARATION DES ÉTATS (STATES)
+  const [pages, setPages] = useState<any[]>([
+    { id: "page-1", title: "Page 1", backgroundColor: "#ffffff", elements: [] }
+  ]);
+  const [activePageIndex, setActivePageIndex] = useState<number>(0);
+  const [siteName, setSiteName] = useState<string>("Mon Site");
+  const [siteId, setSiteId] = useState<string | null>(queryId);
+  const [userPlan, setUserPlan] = useState<string>("free");
+
+  // États UI et sélection
+  const [selectedElementId, setSelectedElementId] = useState<string | null>(null);
+  const [deviceMode, setDeviceMode] = useState<"desktop" | "tablet" | "mobile">("desktop");
+  const [showShapeMenu, setShowShapeMenu] = useState<boolean>(false);
+  const [saving, setSaving] = useState<boolean>(false);
+  const [uploading, setUploading] = useState<boolean>(false);
+
+  // États Drag & Resize
+  const [isDragging, setIsDragging] = useState<boolean>(false);
+  const [isResizing, setIsResizing] = useState<boolean>(false);
+  const [dragOffset, setDragOffset] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
+
+  // Référence Canevas
+  const canvasRef = useRef<HTMLDivElement | null>(null);
+
   
   // Chargement du site et du plan utilisateur
   useEffect(() => {
