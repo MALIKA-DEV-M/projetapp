@@ -162,7 +162,7 @@ function EditorContent({ queryId }: { queryId: string }) {
   }, [queryId]);
 
   const activePage = pages[activePageIndex] || pages[0];
-  const selectedElement = activePage?.elements.find((el) => el.id === selectedElementId);
+  const selectedElement = activePage?.elements.find((el:any) => el.id === selectedElementId);
   const isPaidUser = userPlan === "pro" || userPlan === "enterprise";
 
   // Largeur dynamique selon le mode Responsive
@@ -181,7 +181,7 @@ function EditorContent({ queryId }: { queryId: string }) {
 
     setPages((prevPages) => {
       const updated = [...prevPages];
-      updated[activePageIndex].elements = updated[activePageIndex].elements.map((el) => {
+      updated[activePageIndex].elements = updated[activePageIndex].elements.map((el:any) => {
         if (el.id === selectedElementId) {
           return {
             ...el,
@@ -221,7 +221,7 @@ function EditorContent({ queryId }: { queryId: string }) {
   const removeElement = useCallback((id: string) => {
     setPages((prevPages) => {
       const updated = [...prevPages];
-      updated[activePageIndex].elements = updated[activePageIndex].elements.filter((el) => el.id !== id);
+      updated[activePageIndex].elements = updated[activePageIndex].elements.filter((el:any) => el.id !== id);
       return updated;
     });
     setSelectedElementId(null);
@@ -232,7 +232,7 @@ function EditorContent({ queryId }: { queryId: string }) {
     if (!selectedElementId) return;
     setPages((prevPages) => {
       const updated = [...prevPages];
-      updated[activePageIndex].elements = updated[activePageIndex].elements.map((el) => {
+      updated[activePageIndex].elements = updated[activePageIndex].elements.map((el:any) => {
         if (el.id === selectedElementId) {
           return { ...el, zIndex: layer };
         }
@@ -344,7 +344,7 @@ function EditorContent({ queryId }: { queryId: string }) {
     setSelectedElementId(id);
     setIsDragging(true);
 
-    const el = activePage.elements.find((item) => item.id === id);
+    const el = activePage.elements.find((item:any) => item.id === id);
     if (el) {
       setDragOffset({
         x: e.clientX - el.x,
@@ -378,7 +378,7 @@ function EditorContent({ queryId }: { queryId: string }) {
           return updated;
         });
       } else if (isResizing) {
-        const el = activePage.elements.find((item) => item.id === selectedElementId);
+        const el = activePage.elements.find((item:any) => item.id === selectedElementId);
         if (!el) return;
 
         const newWidth = Math.max(30, e.clientX - canvasRect.left - el.x);
@@ -386,7 +386,7 @@ function EditorContent({ queryId }: { queryId: string }) {
 
         setPages((prevPages) => {
           const updated = [...prevPages];
-          updated[activePageIndex].elements = updated[activePageIndex].elements.map((item) =>
+          updated[activePageIndex].elements = updated[activePageIndex].elements.map((item:any) =>
             item.id === selectedElementId ? { ...item, width: newWidth, height: newHeight } : item
           );
           return updated;
@@ -679,7 +679,7 @@ function EditorContent({ queryId }: { queryId: string }) {
             }}
             className="h-[750px] rounded-2xl shadow-2xl relative border border-slate-800 overflow-hidden transition-all duration-300"
           >
-            {activePage?.elements.map((el) => {
+            {activePage?.elements.map((el:any) => {
               const isSelected = el.id === selectedElementId;
 
               return (
