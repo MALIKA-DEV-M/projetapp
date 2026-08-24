@@ -3,39 +3,18 @@
 import { useState, useEffect, useRef, useCallback, Suspense } from "react";
 import { supabase } from "@/lib/supabase";
 import { useRouter, useSearchParams } from "next/navigation";
+import Link from "next/link";
 import {
-  Type,
-  Image as ImageIcon,
-  Shapes,
-  Trash2,
-  Save,
-  Crown,
-  Bold,
-  Italic,
-  Sliders,
-  Move,
-  Square,
-  Circle,
-  MousePointerClick,
-  Maximize2,
-  Link as LinkIcon,
-  Plus,
-  FileText,
-  Paintbrush,
-  Copy,
-  ArrowUp,
-  ArrowDown,
-  Monitor,
-  Tablet,
-  Smartphone,
-  ArrowLeft,
-  Lock,
+  Type, Image as ImageIcon, Shapes, Trash2, Save, Crown, Bold, Italic,
+  Sliders, Move, Square, Circle, MousePointerClick, Maximize2, Link as LinkIcon,
+  Plus, FileText, Paintbrush, Copy, ArrowUp, ArrowDown, Monitor, Tablet,
+  Smartphone, ArrowLeft, Lock
 } from "lucide-react";
 
+// --- LANDING PAGE ---
 function LandingPage() {
   return (
     <div className="relative min-h-screen bg-[#0b0f17] text-white flex flex-col justify-center items-start px-8 md:px-20 overflow-hidden font-sans">
-      {/* Grille de fond */}
       <div 
         className="absolute inset-0 opacity-15 pointer-events-none"
         style={{
@@ -59,18 +38,18 @@ function LandingPage() {
         </p>
 
         <div className="flex flex-wrap items-center gap-4 pt-2">
-          <a
+          <Link
             href="/dashboard"
             className="px-6 py-3.5 bg-amber-500 hover:bg-amber-400 text-slate-950 font-semibold rounded-xl transition shadow-lg shadow-amber-500/10"
           >
             Commencer gratuitement
-          </a>
-          <a
+          </Link>
+          <Link
             href="/pricing"
             className="px-6 py-3.5 bg-slate-900/80 hover:bg-slate-800 border border-slate-700/80 text-white font-semibold rounded-xl transition"
           >
             Voir les tarifs
-          </a>
+          </Link>
         </div>
 
         <div className="flex flex-wrap items-center gap-6 pt-4 text-xs md:text-sm text-slate-400">
@@ -83,82 +62,23 @@ function LandingPage() {
   );
 }
 
-type ShapeType = "rectangle" | "circle" | "pill" | "button";
-type ElementType = "heading" | "paragraph" | "image" | "shape";
-
-type CanvasElement = {
-  id: string;
-  type: ElementType;
-  shapeType?: ShapeType;
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-  zIndex: number;
-  content: {
-    text?: string;
-    imageUrl?: string;
-    alignment?: "left" | "center" | "right";
-    bgColor?: string;
-    borderColor?: string;
-    borderWidth?: number;
-    textColor?: string;
-    fontSize?: number;
-    fontFamily?: string;
-    fontWeight?: "normal" | "bold";
-    fontStyle?: "normal" | "italic";
-    borderRadius?: number;
-    link?: string;
-    linkTarget?: "_self" | "_blank";
-  };
-};
-
-type Page = {
-  id: string;
-  title: string;
-  backgroundColor: string;
-  elements: CanvasElement[];
-};
-
-function EditorContent() {
+// --- LOGIQUE PRINCIPALE ---
+function MainContent() {
   const searchParams = useSearchParams();
-  const queryId = searchParams.get("id");
+  const queryId = searchParams ? searchParams.get("id") : null;
 
-  // Si pas d'ID dans l'URL, afficher la Landing Page
+  // Si pas d'ID -> Landing Page
   if (!queryId) {
     return <LandingPage />;
   }
 
-  const [pages, setPages] = useState<Page[]>([
-    {
-      id: "page-1",
-      title: "Accueil",
-      backgroundColor: "#ffffff",
-      elements: [],
-    },
-  ]);
+  // Si un ID est présent -> Affichage de ton éditeur
+  return <EditorContent queryId={queryId} />;
+}
 
-  const [siteId, setSiteId] = useState<string | null>(queryId);
-  const [siteName, setSiteName] = useState<string>("Mon Projet Studio Pro");
-  const [activePageIndex, setActivePageIndex] = useState(0);
-  const [selectedElementId, setSelectedElementId] = useState<string | null>(null);
-  const [showShapeMenu, setShowShapeMenu] = useState(false);
-  const [userPlan, setUserPlan] = useState<string>("free");
-  const [saving, setSaving] = useState(false);
-  const [uploading, setUploading] = useState(false);
-  const [deviceMode, setDeviceMode] = useState<"desktop" | "tablet" | "mobile">("desktop");
-
-  // Interaction états
-  const [isDragging, setIsDragging] = useState(false);
-  const [isResizing, setIsResizing] = useState(false);
-  const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
-
-  const canvasRef = useRef<HTMLDivElement>(null);
-  const router = useRouter();
-
-  // Générateur d'ID unique pour éviter les doublons React
-  const generateUniqueId = () => `el-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`;
-
+function EditorContent({ queryId }: { queryId: string }) {
+  // COLLE ICI LE RESTE DE TON CODE D'ÉDITEUR (A PARTIR DE STATENAMES, USEEFFECT, ETC.)
+  
   // Chargement du site et du plan utilisateur
   useEffect(() => {
     async function init() {
@@ -999,10 +919,13 @@ function EditorContent() {
   );
 }
 
+
+
+// --- UN SEUL EXPORT DEFAULT ---
 export default function Home() {
   return (
     <Suspense fallback={<div className="min-h-screen bg-[#0b0f17] text-white flex items-center justify-center">Chargement...</div>}>
-      <EditorContent />
+      <MainContent />
     </Suspense>
   );
 }
